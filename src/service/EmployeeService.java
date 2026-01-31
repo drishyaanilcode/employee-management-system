@@ -41,7 +41,16 @@ public class EmployeeService {
             System.out.println(emp);
         }
     }
-
+    public List<Employee> searchByName(String name) {
+        return employees.stream()
+                .filter(e -> e.getName().toLowerCase().contains(name.toLowerCase()))
+                .toList();
+    }
+    public List<Employee> searchByDept(String dept) {
+        return employees.stream()
+                .filter(e -> e.getDepartment().equalsIgnoreCase(dept))
+                .toList();
+    }
 
     public void updateEmployee(int id, Employee updatedEmployee) {
         for (int i = 0; i < employees.size(); i++) {
