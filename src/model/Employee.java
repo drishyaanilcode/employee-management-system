@@ -1,6 +1,7 @@
 package model;
 
 public class Employee {
+
     private int id;
     private String name;
     private String email;
@@ -15,15 +16,31 @@ public class Employee {
         this.salary = salary;
     }
 
-    public int getId() { return id; }
-    public String getName() { return name; }
-    public String getEmail() { return email; }
-    public String getDepartment() { return department; }
-    public double getSalary() { return salary; }
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
 
     @Override
     public String toString() {
-        return String.format("ID: %d | Name: %s | Email: %s | Dept: %s | Salary: %.2f",
-                id, name, email, department, salary);
+        return String.format(
+                "ID: %d | Name: %s | Email: %s | Dept: %s | Salary: %.2f",
+                id, name, email, department, salary
+        );
     }
 }
