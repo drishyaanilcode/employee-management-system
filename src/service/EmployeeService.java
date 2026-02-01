@@ -1,6 +1,9 @@
 package service;
 
 import model.Employee;
+
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,5 +64,24 @@ public class EmployeeService {
             }
         }
         System.out.println("Employee ID not found.");
+    }
+
+    // Save all employees to a CSV file
+    public void saveToFile(String filename) {
+        try (FileWriter writer = new FileWriter(filename)) {
+            // Write CSV header
+            writer.write("ID,Name,Department,Salary\n");
+
+            for (Employee emp : employees) {
+                writer.write(emp.getId() + ","
+                        + emp.getName() + ","
+                        + emp.getDepartment() + ","
+                        + emp.getSalary() + "\n");
+            }
+
+            System.out.println("Employees saved to file: " + filename);
+        } catch (IOException e) {
+            System.out.println("Error writing to file: " + e.getMessage());
+        }
     }
 }
