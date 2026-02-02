@@ -2,6 +2,8 @@ package service;
 
 import model.Employee;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,6 +36,7 @@ public class EmployeeService {
         }
         System.out.println("Employee ID not found.");
     }
+
     // Display all employees in the list
     public void displayAll() {
         if (employees.isEmpty()) {
@@ -44,11 +47,13 @@ public class EmployeeService {
             System.out.println(emp);
         }
     }
+
     public List<Employee> searchByName(String name) {
         return employees.stream()
                 .filter(e -> e.getName().toLowerCase().contains(name.toLowerCase()))
                 .toList();
     }
+
     public List<Employee> searchByDept(String dept) {
         return employees.stream()
                 .filter(e -> e.getDepartment().equalsIgnoreCase(dept))
@@ -82,6 +87,28 @@ public class EmployeeService {
             System.out.println("Employees saved to file: " + filename);
         } catch (IOException e) {
             System.out.println("Error writing to file: " + e.getMessage());
+        }
+    }
+
+    public void loadFromFile(String filename) {
+        employees.clear(); // clear list before loading
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line = reader.readLine(); // skip header
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 5) {
+                    int id = Integer.parseInt(parts[0].trim());
+                    String name = parts[1].trim();
+                    String email = parts[2].trim();
+                    String dept = parts[3].trim();
+                    double salary = Double.parseDouble(parts[4].trim());
+
+                    employees.add(new Employee(id, name, email, dept, salary));
+                }
+            }
+            System.out.println("Employees loaded from file: " + filename);
+        } catch (IOException | NumberFormatException e) {
+            System.out.println("Error loading data: " + e.getMessage());
         }
     }
 }
