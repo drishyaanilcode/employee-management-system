@@ -7,7 +7,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class EmployeeService {
 
@@ -111,4 +113,19 @@ public class EmployeeService {
             System.out.println("Error loading data: " + e.getMessage());
         }
     }
+
+    // Filter employees by salary range (inclusive)
+    public List<Employee> searchBySalaryRange(double minSalary, double maxSalary) {
+        return employees.stream()
+                .filter(emp -> emp.getSalary() >= minSalary && emp.getSalary() <= maxSalary)
+                .collect(Collectors.toList());
+    }
+
+    // Sort employees by salary (ascending by default)
+    public List<Employee> sortEmployeesBySalary() {
+        return employees.stream()
+                .sorted(Comparator.comparingDouble(Employee::getSalary))
+                .collect(Collectors.toList());
+    }
+
 }
