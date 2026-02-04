@@ -36,7 +36,7 @@ public class Main {
         // 7. Update test
         loadedService.updateEmployee(
                 101,
-                new Employee(101, "Drishya Anil Updated", "newemail@company.com", "Engineering", 95000)
+                new Employee(101, "Drishya Anil Updated", "xyz@company.com", "Engineering", 95000)
         );
 
         // 8. Delete test
