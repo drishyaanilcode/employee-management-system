@@ -93,26 +93,31 @@ public class EmployeeService {
     }
 
     public void loadFromFile(String filename) {
-        employees.clear(); // clear list before loading
+        employees.clear();
+
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line = reader.readLine(); // skip header
+
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length == 5) {
-                    int id = Integer.parseInt(parts[0].trim());
-                    String name = parts[1].trim();
-                    String email = parts[2].trim();
-                    String dept = parts[3].trim();
-                    double salary = Double.parseDouble(parts[4].trim());
 
-                    employees.add(new Employee(id, name, email, dept, salary));
-                }
+                if (parts.length != 4) continue;
+
+                int id = Integer.parseInt(parts[0].trim());
+                String name = parts[1].trim();
+                String dept = parts[2].trim();
+                double salary = Double.parseDouble(parts[3].trim());
+
+                employees.add(new Employee(id, name, dept, salary));
             }
+
             System.out.println("Employees loaded from file: " + filename);
-        } catch (IOException | NumberFormatException e) {
-            System.out.println("Error loading data: " + e.getMessage());
+
+        } catch (IOException e) {
+            System.out.println("No existing file found. Starting with empty data.");
         }
     }
+
 
     // Filter employees by salary range (inclusive)
     public List<Employee> searchBySalaryRange(double minSalary, double maxSalary) {
